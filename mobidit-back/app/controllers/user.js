@@ -15,12 +15,12 @@ const index = async (req, res) => {
 
 const show = async (req, res) => {
 	const {
-		params: { userId },
+		params: { username },
 	} = req;
 	try {
 		const user = await prisma.users.findUnique({
 			where: {
-				id: parseInt(userId, 10),
+				username: username,
 			},
 		});
 		return res.json({
@@ -59,13 +59,13 @@ const create = async (req, res) => {
 
 const update = async (req, res) => {
 	const {
-		params: { userId },
+		params: { username },
 	} = req;
 	const { body } = req;
 	try {
 		const updateUser = await prisma.users.update({
 			where: {
-				id: parseInt(userId, 10),
+				username: username,
 			},
 			data: {
 				...body,
@@ -83,13 +83,13 @@ const update = async (req, res) => {
 
 const supprimer = async (req, res) => {
 	const {
-		params: { userId },
+		params: { username },
 	} = req;
 	const { body } = req;
 	try{
 		const deleteUser = prisma.users.delete({
 			where: {
-				id: parseInt(userId, 10),
+				username: username,
 			},
 		});
 		return res.json({
@@ -103,9 +103,9 @@ const supprimer = async (req, res) => {
 };
 
 module.exports = {
-	index,
-	show,
-	create,
-	update,
-	supprimer
-};
+	index, //show all user
+	show, //show user
+	create, //create user
+	update, //update user
+	supprimer //delete user
+}
