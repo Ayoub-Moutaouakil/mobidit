@@ -13,42 +13,29 @@ const index = async (req, res) => {
 	}
 };
 
-// const show = async (req, res) => {
-// 	const {
-// 		params: { userId },
-// 	} = req;
-// 	try {
-// 		const user = await prisma.users.findUnique({
-// 			where: {
-// 				id: parseInt(userId, 10),
-// 			},
-
-// 			include: {
-// 				PersoJouer: {
-// 					include: {
-// 						Personnages: true,
-// 					},
-// 				},
-// 				ParticipeA: {
-// 					include: {
-// 						Tournois: true,
-// 					},
-// 				},
-// 			},
-// 		});
-// 		return res.json({
-// 			succes: true,
-// 			data: user,
-// 			code: 200,
-// 		});
-// 	} catch (error) {
-// 		return res.json({
-// 			succes: false,
-// 			message: 'Utilisateur not found',
-// 			code: 404,
-// 		});
-// 	}
-// };
+const show = async (req, res) => {
+	const {
+		params: { userId },
+	} = req;
+	try {
+		const user = await prisma.users.findUnique({
+			where: {
+				id: parseInt(userId, 10),
+			},
+		});
+		return res.json({
+			succes: true,
+			data: user,
+			code: 200,
+		});
+	} catch (error) {
+		return res.json({
+			succes: false,
+			message: 'Utilisateur not found',
+			code: 404,
+		});
+	}
+};
 
 // const create = async (req, res) => {
 // 	try {
@@ -170,6 +157,6 @@ const index = async (req, res) => {
 
 module.exports = {
 	index,
-	// show,
+	show,
 	// create,
 };
