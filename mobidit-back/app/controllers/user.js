@@ -10,7 +10,7 @@ const index = async (req, res) => {
 		});
 	} catch (error) {
 		return res.json({ succes: false, data: { error }, code: 400 });
-	}
+	};
 };
 
 const show = async (req, res) => {
@@ -34,7 +34,7 @@ const show = async (req, res) => {
 			message: 'Utilisateur not found',
 			code: 404,
 		});
-	}
+	};
 };
 
 const create = async (req, res) => {
@@ -54,7 +54,7 @@ const create = async (req, res) => {
 	} catch (error) {
 		console.log(error);
 		return res.json({ succes: false, data: { error } });
-	}
+	};
 };
 
 const update = async (req, res) => {
@@ -81,9 +81,31 @@ const update = async (req, res) => {
 	}
 };
 
+const supprimer = async (req, res) => {
+	const {
+		params: { userId },
+	} = req;
+	const { body } = req;
+	try{
+		const deleteUser = prisma.users.delete({
+			where: {
+				id: parseInt(userId, 10),
+			},
+		});
+		return res.json({
+			succes: true,
+			data: deleteUser,
+			code: 200,
+		});
+	}catch (error) {
+		return res.json({ succes: false, data: { error } });
+	};
+};
+
 module.exports = {
 	index,
 	show,
 	create,
-	update
+	update,
+	supprimer
 };
