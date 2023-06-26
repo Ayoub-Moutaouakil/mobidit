@@ -37,23 +37,25 @@ const show = async (req, res) => {
 	}
 };
 
-// const create = async (req, res) => {
-// 	try {
-// 		const { body } = req;
-// 		const createUser = await prisma.users.create({
-// 			data: {
-// 				...body,
-// 			},
-// 		});
-// 		return res.json({
-// 			succes: true,
-// 			data: createUser,
-// 			code: 200,
-// 		});
-// 	} catch (error) {
-// 		return res.json({ succes: false, data: { error } });
-// 	}
-// };
+const create = async (req, res) => {
+	try {
+		const { body } = req;
+		console.log(body);
+		const createUser = await prisma.users.create({
+			data: {
+				...body,
+			},
+		});
+		return res.json({
+			succes: true,
+			data: createUser,
+			code: 200,
+		});
+	} catch (error) {
+		console.log(error);
+		return res.json({ succes: false, data: { error } });
+	}
+};
 
 // const update = async (req, res) => {
 // 	const {
@@ -79,84 +81,8 @@ const show = async (req, res) => {
 // 	}
 // };
 
-// const register = async (req, res) => {
-// 	//TODO : regex test if is only numbers
-// 	const {
-// 		params: { userId, tournoiId },
-// 	} = req;
-// 	try {
-// 		const register = await prisma.ParticipeA.create({
-// 			//TODO : limit to 1 user per tournament
-// 			data: {
-// 				userId: parseInt(userId, 10),
-// 				tournoiId: parseInt(tournoiId, 10),
-// 			},
-// 		});
-// 		// const isRegistered = await prisma.ParticipeA.findFirst({
-// 		// 	where: {
-// 		// 		AND: [
-// 		// 			{
-// 		// 				filters: {
-// 		// 					some: {
-// 		// 						userId: parseInt(userId, 10),
-// 		// 						tournoiId: parseInt(tournoiId, 10),
-// 		// 					},
-// 		// 				},
-// 		// 			},
-// 		// 		],
-// 		// 	},
-// 		// });
-// 		// console.log(isRegistered);
-// 		// const register = await prisma.ParticipeA.upsert({
-// 		// 	where: {
-// 		// 		AND: [
-// 		// 			{
-// 		// 				Users: {
-// 		// 					userId: parseInt(userId, 10),
-// 		// 				},
-// 		// 				Tournois: {
-// 		// 					tournoiId: parseInt(tournoiId, 10),
-// 		// 				},
-// 		// 			},
-// 		// 		],
-// 		// 	},
-// 		// 	create: {
-// 		// 		userId: parseInt(userId, 10),
-// 		// 		tournoiId: parseInt(tournoiId, 10),
-// 		// 	},
-// 		// 	update: {
-// 		// 		userId: parseInt(userId, 10),
-// 		// 		tournoiId: parseInt(tournoiId, 10),
-// 		// 	},
-// 		// 	include: {
-// 		// 		Users: true,
-// 		// 		Tournois: true,
-// 		// 	},
-// 		// });
-// 		return res.json({
-// 			succes: true,
-// 			data: register,
-// 			code: 200,
-// 		});
-// 	} catch (error) {
-// 		console.log(error);
-// 		if (error.code === 'P2003') {
-// 			return res.json({
-// 				succes: false,
-// 				message: `Le champs ${error.meta.field_name} est incorrecte.`,
-// 				code: 404,
-// 			});
-// 		}
-// 		return res.json({
-// 			succes: false,
-// 			data: { error },
-// 			code: 400,
-// 		});
-// 	}
-// };
-
 module.exports = {
 	index,
 	show,
-	// create,
+	create,
 };
