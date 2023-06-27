@@ -25,11 +25,24 @@ const login = async(req, res) =>{
       password: true,
     },
   });
-  return res.json({
-    succes: true,
-    data: username,
-    code: 200,
-  });
+  const test  = crypto.randomBytes(16).toString('hex');
+//  const test = crypto.pbkdf2(password, env("SALT"), 310000, 32, 'sha256', ((err, hashedPassword)=>{
+//     // console.log(hashedPassword);
+//     // console.log(dbPassword)
+//     return hashedPassword;
+//     // if (err) { return cb(err); }
+//     // if (!crypto.timingSafeEqual(dbPassword, hashedPassword)) {
+//     //   return { message: 'Incorrect username or password.' };
+//     // };
+//     // return res.json({
+//     //   succes: true,
+//     //   data: username,
+//     //   code: 200,
+//     // });
+//   }));
+
+  console.log(test);
+  
 } catch (error) {
   console.log(error);
   let message;
