@@ -1,17 +1,53 @@
-import React from "react";
-import { FeedContainer, FeedContent, FeedHeader, FeedMenu, FeedTitle } from "./FeedElements";
-import { LikeOutlined, DislikeOutlined, CommentOutlined } from '@ant-design/icons';
-import { Avatar, Card } from 'antd';
+import React, { useState } from "react";
+import { FeedAdd, FeedContainer, FeedContent, FeedHeader, FeedMenu, FeedTitle } from "./FeedElements";
+import { LikeOutlined, DislikeOutlined, CommentOutlined, PlusOutlined } from '@ant-design/icons';
+import { Avatar, Card, Input, Button, Form } from 'antd';
 
 const { Meta } = Card;
+const { TextArea } = Input;
 
 const Feed = () => {
+
+    const [postText, setPostText] = useState("")
+
+    function handlePostText(e) {
+        setPostText(e.target.value)
+    }
+
+    function handleSubmit(e) {
+        console.log(postText)
+    }
+
     return (
         <FeedContainer>
             <FeedHeader>
                 <FeedTitle>Mobidit</FeedTitle>
             </FeedHeader>
             <FeedContent>
+                <Form onFinish={handleSubmit}>
+                    <Card
+                        style={{ width: 400, marginBottom: 15, }}
+                    >
+                        <Meta
+                            avatar={<Avatar src="https://www.japanfm.fr/wp-content/uploads/2022/12/Yamato-scaled.jpg" />}
+                            title="Ayuuub"
+                        />
+                        <Form.Item
+                            name="postText"
+                            rules={[{ required: true, message: '' }]}
+                        >
+                            <TextArea
+                                showCount
+                                maxLength={150}
+                                style={{ height: 100, resize: 'none', marginTop: 15 }}
+                                placeholder="disable resize"
+                                onChange={handlePostText}
+                            />
+                        </Form.Item>
+                        <Button type="primary" shape="circle" icon={<PlusOutlined />} size={'large'} style={{ justifySelf: "center" }} htmlType="submit" />
+                    </Card>
+                </Form>
+
                 <Card
                     style={{ width: 400, marginBottom: 15 }}
                     actions={[

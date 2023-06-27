@@ -38,3 +38,10 @@ export const FeedMenu = styled.div`
     margin-left: 10px;
     margin-top: 10px;
 `
+
+export const FeedAdd = styled.div`
+    width: 400px;
+    height: 50px;
+    background-color: #FF5A5F;
+    margin-bottom: 15px;
+`
