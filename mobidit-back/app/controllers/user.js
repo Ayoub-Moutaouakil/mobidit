@@ -40,7 +40,6 @@ const show = async (req, res) => {
 const create = async (req, res) => {
 	try {
 		const { body } = req;
-		console.log(body);
 		const createUser = await prisma.users.create({
 			data: {
 				...body,
@@ -52,7 +51,6 @@ const create = async (req, res) => {
 			code: 200,
 		});
 	} catch (error) {
-		console.log(error);
 		return res.json({ succes: false, data: { error } });
 	};
 };
@@ -85,7 +83,6 @@ const supprimer = async (req, res) => {
 	const {
 		params: { username },
 	} = req;
-	const { body } = req;
 	try{
 		const deleteUser = prisma.users.delete({
 			where: {
