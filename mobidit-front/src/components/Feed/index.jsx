@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FeedAdd, FeedContainer, FeedContent, FeedHeader, FeedMenu, FeedTitle } from "./FeedElements";
 import { LikeOutlined, DislikeOutlined, CommentOutlined, PlusOutlined } from '@ant-design/icons';
 import { Avatar, Card, Input, Button, Form } from 'antd';
+import { createPost } from "../../services/PostService";
 
 const { Meta } = Card;
 const { TextArea } = Input;
@@ -15,7 +16,16 @@ const Feed = () => {
     }
 
     function handleSubmit(e) {
-        console.log(postText)
+        var params = {
+            'text': postText,
+            'parent_id': null,
+            'user_id': 1,
+            'date': new Date(),
+            'attachements': null,
+            'likes': 0,
+            'dislike': 0
+        }
+        createPost(params)
     }
 
     return (
