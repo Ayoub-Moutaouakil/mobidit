@@ -26,11 +26,9 @@ model posts {
 
 model users {
   id       Int     @id @default(autoincrement())
-  lname    String  @db.VarChar(255)
-  fname    String  @db.VarChar(255)
   username String  @unique(map: "username") @db.VarChar(255)
   mail     String  @db.VarChar(255)
-  password String  @db.VarChar(50)
+  password String  @db.VarChar(255)
   img_url  String  @db.Text
   posts    posts[]
 }

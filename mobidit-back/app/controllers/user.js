@@ -1,4 +1,5 @@
 const { prisma } = require('../../services/prismaClient');
+var crypto = require('crypto');
 
 const index = async (req, res) => {
 	try {
@@ -39,18 +40,33 @@ const show = async (req, res) => {
 
 const create = async (req, res) => {
 	try {
-		const { body } = req;
+		let { body:{
+			lname,
+			fname,
+			username,
+			mail,
+			password,
+			img_url
+		} } = req;
+		password = await crypto.pbkdf2Sync(password, process.env.SALT, 1000, 64, `sha512`).toString(`hex`);
 		const createUser = await prisma.users.create({
 			data: {
-				...body,
+				password,
+				lname,
+				fname,
+				username,
+				mail,
+				password,
+				img_url
 			},
 		});
 		return res.json({
 			succes: true,
-			data: createUser,
+			message:"L'utilisateur a bien été créé.",
 			code: 200,
 		});
 	} catch (error) {
+		console.log(error);
 		return res.json({ succes: false, data: { error } });
 	};
 };
