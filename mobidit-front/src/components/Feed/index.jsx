@@ -1,12 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { FeedAdd, FeedContainer, FeedContent, FeedHeader, FeedMenu, FeedTitle } from "./FeedElements";
 import { LikeOutlined, DislikeOutlined, CommentOutlined, PlusOutlined } from '@ant-design/icons';
 import { Avatar, Card, Input, Button, Form } from 'antd';
+import { AuthContext } from "../../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const { Meta } = Card;
 const { TextArea } = Input;
 
 const Feed = () => {
+    const { isAuth } = useContext(AuthContext);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (isAuth === false){
+            navigate("/login");
+        }
+    }, [isAuth])
 
     const [postText, setPostText] = useState("")
 
