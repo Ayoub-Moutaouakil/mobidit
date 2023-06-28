@@ -26,15 +26,20 @@ const login = async(req, res) =>{
     },
   });
   const hashedPassword = await crypto.pbkdf2Sync(password, process.env.SALT, 1000, 64, `sha512`).toString(`hex`);
-
-  if(dbPassword === hashedPassword){
+  if(dbPassword.password === hashedPassword){
     return res.json({
 			succes: true,
 			message:"Connexion réussi",
 			code: 200,
 		});
+  } else{
+    return res.json({
+			succes: false,
+			message:"Mot de passe incorrect.",
+			code: 200,
+		});
   }
-  
+
 } catch (error) {
   console.log(error);
   let message;
