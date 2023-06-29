@@ -45,18 +45,19 @@ const showUser = async (req, res) => {
   const {
 		params: { username },
 	} = req;
-  console.log(username)
+  console.log({username})
   try{
     const user = await prisma.users.findUnique({
 			where: {
 				username,
 			},
 		});
-    console.log(user.user_id);
     const posts = await prisma.posts.findMany({
       where: {
         NOT:{
-          user_id:user.user_id,
+          user_id:{
+            equals:user.id,
+          }
         }
       }
     });
