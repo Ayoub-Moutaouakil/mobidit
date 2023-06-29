@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import { FeedAdd, FeedContainer, FeedContent, FeedHeader, FeedMenu, FeedTitle } from "./FeedElements";
+import { FeedButton, FeedContainer, FeedContent, FeedHeader, FeedTitle } from "./FeedElements";
 import { LikeOutlined, DislikeOutlined, CommentOutlined, PlusOutlined } from '@ant-design/icons';
 import { Avatar, Card, Input, Button, Form } from 'antd';
 import { AuthContext } from "../../contexts/AuthContext";
@@ -46,7 +46,9 @@ const Feed = () => {
     return (
         <FeedContainer>
             <FeedHeader>
+                <Avatar size={50} src={user.img_url} style={{cursor: "pointer"}}/>
                 <FeedTitle>Mobidit</FeedTitle>
+                <FeedButton></FeedButton>
             </FeedHeader>
             <FeedContent>
                 <Form onFinish={onFinish}>

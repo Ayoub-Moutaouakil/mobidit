@@ -12,7 +12,7 @@ export const FeedHeader = styled.div`
     height: 75px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-evenly;
 `
 
 export const FeedTitle = styled.h1`
@@ -29,14 +29,10 @@ export const FeedContent = styled.div`
     align-items: center;
 `
 
-export const FeedMenu = styled.div`
+export const FeedButton = styled.div`
     width: 50px;
     height: 50px;
-    background-color: white;
     border-radius: 100%;
-    position: absolute;
-    margin-left: 10px;
-    margin-top: 10px;
 `
 
 export const FeedAdd = styled.div`
