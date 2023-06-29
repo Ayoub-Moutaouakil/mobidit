@@ -1,10 +1,11 @@
 import React from "react";
 import { LoginContainer, LoginTitle, LoginWrapper } from "./LoginElements";
 import { Button, Form, Input } from 'antd';
+import { LockOutlined, UserOutlined } from '@ant-design/icons';
 
 const Login = () => {
 
-    function handleSubmit () {
+    function handleSubmit() {
         console.log("test")
     }
 
@@ -22,25 +23,29 @@ const Login = () => {
                     autoComplete="off"
                 >
                     <Form.Item
-                        label="Pseudo"
                         name="username"
-                        rules={[{ required: true, message: 'Please input your username!' }]}
+                        rules={[{ required: true, message: 'Veuillez entrez votre pseudo !' }]}
                     >
-                        <Input />
+                        <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
                     </Form.Item>
 
                     <Form.Item
-                        label="Mot de passe"
                         name="password"
-                        rules={[{ required: true, message: 'Please input your password!' }]}
+                        rules={[{ required: true, message: 'Veuillez entrez votre mot de passe !' }]}
                     >
-                        <Input.Password />
+                        <Input.Password
+                            prefix={<LockOutlined className="site-form-item-icon" />}
+                            placeholder="Mot de Passe"
+                        />
                     </Form.Item>
 
-                    <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+                    <Form.Item wrapperCol={{ offset: 6, span: 16 }}>
                         <Button type="primary" htmlType="submit">
-                            Submit
+                            Se connecter
                         </Button>
+                        <br/>
+                        <br/>
+                        <a href="">Devenir membre !</a>
                     </Form.Item>
                 </Form>
             </LoginWrapper>
