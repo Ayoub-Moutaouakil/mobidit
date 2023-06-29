@@ -23,12 +23,59 @@ const show = async (req, res) =>{
         id
       }
     });
-    return res.json({
-			succes: true,
-			data: post,
-			code: 200,
-		});
+    if(post.length){
+      return res.json({
+        succes: true,
+        data: post,
+        code: 200,
+      });
+    } else{
+      return res.json({
+        succes: true,
+        message: 'Aucun posts a afficher.',
+        code: 200,
+      });
+    }
   } catch (error){
+		return res.json({ succes: false, data: { error }, code: 400 });
+  }
+};
+
+const showUser = async (req, res) => {
+  const {
+		params: { username },
+	} = req;
+  console.log(username)
+  try{
+    const user = await prisma.users.findUnique({
+			where: {
+				username,
+			},
+		});
+    console.log(user.user_id);
+    const posts = await prisma.posts.findMany({
+      where: {
+        NOT:{
+          user_id:user.user_id,
+        }
+      }
+    });
+    if(posts.length){
+      return res.json({
+        succes: true,
+        data: posts,
+        code: 200,
+      });
+    } else{
+      return res.json({
+        succes: true,
+        message: 'Aucun posts a afficher.',
+        code: 200,
+      });
+    }
+    
+  } catch (error){
+    console.log(error);
 		return res.json({ succes: false, data: { error }, code: 400 });
   }
 };
@@ -99,6 +146,7 @@ const supprimer = async(req, res) => {
 module.exports = {
   index,
   show,
+  showUser,
   create,
   update,
   supprimer
