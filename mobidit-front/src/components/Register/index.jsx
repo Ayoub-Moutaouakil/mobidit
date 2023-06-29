@@ -2,8 +2,19 @@ import React, {useState} from "react";
 import { RegisterContainer, RegisterTitle, RegisterWrapper } from "./RegisterElements";
 import { Button, Form, Input, Upload } from 'antd';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../contexts/AuthContext";
 
 const Register = () => {
+    const { isAuth, login } = useContext(AuthContext);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (isAuth === true){
+            navigate("/")
+        }
+    }, [isAuth])
+
     const [loading, setLoading] = useState(false);
     const [imageUrl, setImageUrl] = useState("");
 
