@@ -24,8 +24,10 @@ const show = async (req, res) =>{
       },
       include:{
         users:{
-          username: true,
-          img_url: true
+          select:{
+            username: true,
+            img_url: true
+          }
         }
       }
     });
@@ -46,6 +48,7 @@ const show = async (req, res) =>{
 		return res.json({ succes: false, data: { error }, code: 400 });
   }
 };
+
 
 const showUser = async (req, res) => {
   const {

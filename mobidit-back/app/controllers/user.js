@@ -23,6 +23,9 @@ const show = async (req, res) => {
 			where: {
 				username: username,
 			},
+			include:{
+				posts: true
+			}
 		});
 		return res.json({
 			succes: true,
