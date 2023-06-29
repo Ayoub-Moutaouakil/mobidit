@@ -3,7 +3,7 @@ import { LoginContainer, LoginTitle, LoginWrapper } from "./LoginElements";
 import { Button, Form, Input } from 'antd';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { AuthContext } from "../../contexts/AuthContext";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const Login = () => {
     const { isAuth, login } = useContext(AuthContext);

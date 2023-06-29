@@ -9,6 +9,7 @@ export const AuthContextProvider = ({ children }) => {
 
 	function login (credentials) {
         UserLogin(credentials).then((response) => {
+			console.log(response)
             setUser(response.data)
             setIsAuth(response.succes)
         })

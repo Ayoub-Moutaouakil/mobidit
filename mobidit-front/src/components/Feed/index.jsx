@@ -15,7 +15,6 @@ const Feed = () => {
     const navigate = useNavigate();
 
     const [posts, setPosts] = useState([])
-    const [test, setTest] = useState([1, 2, 3, 4, 5])
 
     useEffect(() => {
         if (isAuth === false) {
@@ -45,7 +44,7 @@ const Feed = () => {
     return (
         <FeedContainer>
             <FeedHeader>
-                <Avatar size={50} src={user.img_url} style={{cursor: "pointer"}}/>
+                <Avatar size={50} src={user.img_url} style={{cursor: "pointer"}} onClick={() => navigate("/profil", { state : { img: user.img_url, username: user.username }})}/>
                 <FeedTitle>Mobidit</FeedTitle>
                 <FeedButton></FeedButton>
             </FeedHeader>

@@ -1,21 +1,28 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { ProfilContainer, ProfilContent, ProfilHeader, ProfilTitle } from './ProfilElements'
 import { Avatar } from 'antd';
+import { AuthContext } from '../../contexts/AuthContext';
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Profil = () => {
+    const { isAuth } = useContext(AuthContext);
+    const navigate = useNavigate();
 
+    const {state} = useLocation();
+    const { img, username } = state
     const [posts, setPosts] = useState([1,2,3,4,5])
 
-    var user = {
-        username: "Ayuuub",
-        img_url: "https://www.melty.fr/wp-content/uploads/meltyfr/2022/06/yamato2.jpeg"
-    }
+    useEffect(() => {
+        if (isAuth === false) {
+            navigate("/login");
+        }
+    }, [isAuth])
     
     return(
         <ProfilContainer>
             <ProfilHeader>
-                <Avatar size={100} src={user.img_url}/>
-                <ProfilTitle>{user.username}</ProfilTitle>
+                <Avatar size={100} src={img}/>
+                <ProfilTitle>{username}</ProfilTitle>
             </ProfilHeader>
             <ProfilContent>
                 {posts && posts.map((post) => {
