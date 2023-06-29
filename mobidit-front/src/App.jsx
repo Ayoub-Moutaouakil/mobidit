@@ -7,6 +7,14 @@ import Profil from './components/Profil';
 import Post from './components/Post';
 
 function App() {
+
+  window.addEventListener('load', async () => {
+    if (navigator.serviceWorker) {
+      await navigator.serviceWorker.register('../dev-dist/sw.js')
+      console.log('service worker registered successfully')
+    }
+  })
+
   return (
     <AuthContextProvider>
       <Routes>
