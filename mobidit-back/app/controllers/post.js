@@ -21,6 +21,12 @@ const show = async (req, res) =>{
     const post = await prisma.posts.findUnique({
       where: {
         id
+      },
+      include:{
+        users:{
+          username: true,
+          img_url: true
+        }
       }
     });
     if(post.length){
@@ -58,6 +64,12 @@ const showUser = async (req, res) => {
           user_id:{
             equals:user.id,
           }
+        }
+      },
+      include:{
+        users:{
+          username: true,
+          img_url: true
         }
       }
     });
