@@ -65,6 +65,7 @@ const create = async (req, res) => {
 		});
 		return res.json({
 			succes: true,
+			data: createUser,
 			message:"L'utilisateur a bien été créé.",
 			code: 200,
 		});
