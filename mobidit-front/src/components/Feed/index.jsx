@@ -28,7 +28,6 @@ const Feed = () => {
     }, [])
 
     function onFinish(value) {
-        console.log(value)
         var params = {
             "text": value.postText,
             "user_id": user.id,
@@ -79,7 +78,7 @@ const Feed = () => {
                         actions={[
                             <LikeOutlined key="like" />,
                             <DislikeOutlined key="dislike" />,
-                            <CommentOutlined key="comment" />,
+                            <CommentOutlined key="comment" onClick={() => navigate("/post", { state : { img: post.users.img_url, username: post.users.username, text: post.text, id: post.id }})} />,
                         ]}
                     >
                         <Meta

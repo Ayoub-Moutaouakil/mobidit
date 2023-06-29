@@ -1,39 +1,57 @@
-import React from "react"
+import React, { useContext, useEffect } from "react"
 import { PostContainer } from "./PostElements";
 import { LikeOutlined, DislikeOutlined, CommentOutlined, PlusOutlined } from '@ant-design/icons';
 import { Avatar, Card, Input, Button, Form } from 'antd';
+import { useLocation, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../contexts/AuthContext";
+import { createPost } from "../../services/PostService";
 
 const { Meta } = Card;
 const { TextArea } = Input;
 
 const Post = () => {
+    const { isAuth, user } = useContext(AuthContext);
 
-    function onFinish () {
-        console.log("test")
+    const navigate = useNavigate()
+    const {state} = useLocation();
+    const { img, username, text, id } = state
+
+    useEffect(() => {
+        if (isAuth === false) {
+            navigate("/login");
+        }
+    }, [isAuth])
+
+    function onFinish (value) {
+        var params = {
+            "text": value.postText,
+            "user_id": user.id,
+            "parent_id": id,
+            "likes": 0,
+            "dislike": 0
+        }
+        createPost(params).then((response) => {
+            console.log(response)
+        })
     }
 
     return (
         <PostContainer>
             <Card
                 style={{ width: 400, height: "fit-content", marginTop: 15, marginBottom: 15 }}
-                actions={[
-                    <LikeOutlined key="like" />,
-                    <DislikeOutlined key="dislike" />,
-                    <CommentOutlined key="comment" />,
-                ]}
             >
                 <Meta
-                    avatar={<Avatar src={"https://fr.web.img4.acsta.net/r_654_368/newsv7/19/10/03/15/43/2838505.jpg"} style={{ cursor: "pointer" }} />}
-                    title={"Ayuuub"}
-                    description={"Ceci est un post"}
+                    avatar={<Avatar src={img} style={{ cursor: "pointer" }} />}
+                    title={username}
+                    description={text}
                 />
                 <Form onFinish={onFinish}>
                     <Card
                         style={{ width: "100%", marginTop: 15, }}
                     >
                         <Meta
-                            avatar={<Avatar src={"https://fr.web.img4.acsta.net/r_654_368/newsv7/19/10/03/15/43/2838505.jpg"} style={{ cursor: "pointer" }} />}
-                            title={"Ayuuub"}
+                            avatar={<Avatar src={user.img_url} style={{ cursor: "pointer" }} />}
+                            title={user.username}
                         />
                         <Form.Item
                             name="postText"
