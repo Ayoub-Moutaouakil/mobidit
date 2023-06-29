@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { LoginContainer, LoginTitle, LoginWrapper } from "./LoginElements";
 import { Button, Form, Input } from 'antd';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
@@ -16,8 +16,8 @@ const Login = () => {
         }
     }, [isAuth])
 
-    function handleSubmit() {
-        login()
+    function onFinish(values) {
+        login(values)
     }
 
     return (
@@ -30,14 +30,17 @@ const Login = () => {
                     wrapperCol={{ span: 16 }}
                     style={{ maxWidth: 600 }}
                     initialValues={{ remember: true }}
-                    onFinish={handleSubmit}
+                    onFinish={onFinish}
                     autoComplete="off"
                 >
                     <Form.Item
                         name="username"
                         rules={[{ required: true, message: 'Veuillez entrez votre pseudo !' }]}
                     >
-                        <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
+                        <Input 
+                            prefix={<UserOutlined className="site-form-item-icon" />} 
+                            placeholder="Username" 
+                        />
                     </Form.Item>
 
                     <Form.Item

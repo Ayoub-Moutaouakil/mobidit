@@ -4,13 +4,16 @@ import { LikeOutlined, DislikeOutlined, CommentOutlined, PlusOutlined } from '@a
 import { Avatar, Card, Input, Button, Form } from 'antd';
 import { AuthContext } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { createPost } from "../../services/PostService";
 
 const { Meta } = Card;
 const { TextArea } = Input;
 
 const Feed = () => {
-    const { isAuth } = useContext(AuthContext);
+    const { isAuth, user } = useContext(AuthContext);
     const navigate = useNavigate();
+
+    const [posts, setPosts] = useState([])
 
     useEffect(() => {
         if (isAuth === false){
@@ -18,14 +21,20 @@ const Feed = () => {
         }
     }, [isAuth])
 
-    const [postText, setPostText] = useState("")
-
-    function handlePostText(e) {
-        setPostText(e.target.value)
-    }
-
-    function handleSubmit(e) {
-        console.log(postText)
+    function onFinish(value) {
+        console.log(value)
+        var params = {
+            "text": value.postText,
+            "user_id": user.id,
+            "parent_id": '',
+            "date": new Date(),
+            "attachements": '',
+            "likes": '',
+            "dislike": ''
+        }
+        createPost(params).then((response) => {
+            console.log(response)
+        })
     }
 
     return (
@@ -34,13 +43,13 @@ const Feed = () => {
                 <FeedTitle>Mobidit</FeedTitle>
             </FeedHeader>
             <FeedContent>
-                <Form onFinish={handleSubmit}>
+                <Form onFinish={onFinish}>
                     <Card
                         style={{ width: 400, marginBottom: 15, }}
                     >
                         <Meta
-                            avatar={<Avatar src="https://www.japanfm.fr/wp-content/uploads/2022/12/Yamato-scaled.jpg" />}
-                            title="Ayuuub"
+                            avatar={<Avatar src={user.img_url} />}
+                            title={user.username}
                         />
                         <Form.Item
                             name="postText"
@@ -50,8 +59,7 @@ const Feed = () => {
                                 showCount
                                 maxLength={150}
                                 style={{ height: 100, resize: 'none', marginTop: 15 }}
-                                placeholder="disable resize"
-                                onChange={handlePostText}
+                                placeholder="Une envie de dire quelque chose ?"
                             />
                         </Form.Item>
                         <Button type="primary" shape="circle" icon={<PlusOutlined />} size={'large'} style={{ justifySelf: "center" }} htmlType="submit" />

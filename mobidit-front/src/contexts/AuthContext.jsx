@@ -1,4 +1,5 @@
 import { createContext, useState } from 'react';
+import { UserLogin } from '../services/UserService';
 
 export const AuthContext = createContext();
 
@@ -6,16 +7,15 @@ export const AuthContextProvider = ({ children }) => {
     const [user, setUser] = useState({})
 	const [isAuth, setIsAuth] = useState(false);
 
-	function login () {
-        setUser({
-            username: "Ayuuub",
-            email: "ayoub_m@outlook.fr"
+	function login (credentials) {
+        UserLogin(credentials).then((response) => {
+            setUser(response.data)
+            setIsAuth(response.succes)
         })
-        setIsAuth(!isAuth)
     }
 
 	return (
-		<AuthContext.Provider value={{ isAuth, login }}>
+		<AuthContext.Provider value={{ user, isAuth, login }}>
 			{children}
 		</AuthContext.Provider>
 	);
