@@ -20,61 +20,48 @@ const show = async (req, res) =>{
   try{
     const post = await prisma.posts.findUnique({
       where: {
-        id
-      },
-      include:{
-        users:{
-          select:{
-            username: true,
-            img_url: true
-          }
-        }
+        id:parseInt(id, 10)
       }
     });
-    if(post.length){
+    console.log(post.id)
+    const subPost = await prisma.posts.findMany({
+      where:{
+        parent_id:post.id
+      }
+    });
       return res.json({
         succes: true,
-        data: post,
+        post,
+        subPost,
         code: 200,
       });
-    } else{
-      return res.json({
-        succes: true,
-        message: 'Aucun posts a afficher.',
-        code: 200,
-      });
-    }
+      // return res.json({
+      //   succes: true,
+      //   message: 'Aucun posts a afficher.',
+      //   code: 200,
+      // });
   } catch (error){
+    console.log(error);
 		return res.json({ succes: false, data: { error }, code: 400 });
   }
 };
-
 
 const showUser = async (req, res) => {
   const {
 		params: { username },
 	} = req;
-  console.log({username})
+  console.log(username)
   try{
     const user = await prisma.users.findUnique({
 			where: {
 				username,
 			},
 		});
+    console.log(user.user_id);
     const posts = await prisma.posts.findMany({
       where: {
         NOT:{
-          user_id:{
-            equals:user.id,
-          }
-        }
-      },
-      include:{
-        users:{
-          select:{
-            username: true,
-            img_url: true
-          }
+          user_id:user.user_id,
         }
       }
     });
@@ -104,10 +91,6 @@ const create = async (req, res) =>{
     const createPost = await prisma.posts.create({
       data: {
         ...body,
-        date: new Date,
-        user_id: parseInt(body.user_id, 10),
-        likes: parseInt(body.likes, 10),
-        dislike: parseInt(body.dislike, 10)
       },
     });
     return res.json({
