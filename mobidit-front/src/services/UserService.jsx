@@ -19,3 +19,11 @@ export async function UserLogin (params) {
     const result = await response.json()
     return result
 }
+
+export function getUserPhoto (id) {
+    return "https://www.japanfm.fr/wp-content/uploads/2022/12/Yamato-scaled.jpg"
+}
+
+export function getUserName (id) {
+    return "TEST"
+}

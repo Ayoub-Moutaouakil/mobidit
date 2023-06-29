@@ -4,7 +4,8 @@ import { LikeOutlined, DislikeOutlined, CommentOutlined, PlusOutlined } from '@a
 import { Avatar, Card, Input, Button, Form } from 'antd';
 import { AuthContext } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { createPost } from "../../services/PostService";
+import { createPost, getAllPosts } from "../../services/PostService";
+import { getUserName, getUserPhoto } from "../../services/UserService";
 
 const { Meta } = Card;
 const { TextArea } = Input;
@@ -14,23 +15,28 @@ const Feed = () => {
     const navigate = useNavigate();
 
     const [posts, setPosts] = useState([])
+    const [test, setTest] = useState([1, 2, 3, 4, 5])
 
     useEffect(() => {
-        if (isAuth === false){
+        if (isAuth === false) {
             navigate("/login");
         }
     }, [isAuth])
+
+    useEffect(() => {
+        getAllPosts(user.username).then((response) => {
+            setPosts(response.data)
+            console.log(posts)
+        })
+    }, [])
 
     function onFinish(value) {
         console.log(value)
         var params = {
             "text": value.postText,
             "user_id": user.id,
-            "parent_id": '',
-            "date": new Date(),
-            "attachements": '',
-            "likes": '',
-            "dislike": ''
+            "likes": 0,
+            "dislike": 0
         }
         createPost(params).then((response) => {
             console.log(response)
@@ -66,50 +72,28 @@ const Feed = () => {
                     </Card>
                 </Form>
 
-                <Card
-                    style={{ width: 400, marginBottom: 15 }}
-                    actions={[
-                        <LikeOutlined key="like" />,
-                        <DislikeOutlined key="dislike" />,
-                        <CommentOutlined key="comment" />,
-                    ]}
-                >
-                    <Meta
-                        avatar={<Avatar src="https://www.japanfm.fr/wp-content/uploads/2022/12/Yamato-scaled.jpg" />}
-                        title="Ayuuub"
-                        description="Wsh c'est un truc de fou comment je suis trop cho en FRONT"
-                    />
-                </Card>
+                {posts && posts.map((post) => {
+                    var username = getUserName(post.user_id)
+                    var avatar = getUserPhoto(post.user_id)
+                    console.log(username)
 
-                <Card
-                    style={{ width: 400, marginBottom: 15 }}
-                    actions={[
-                        <LikeOutlined key="like" />,
-                        <DislikeOutlined key="dislike" />,
-                        <CommentOutlined key="comment" />,
-                    ]}
-                >
-                    <Meta
-                        avatar={<Avatar src="https://media.sellfy.com/images/16AULvJ2/eAM1/Anthro_Eastern_Dragon_Base_Example.jpg" />}
-                        title="Khais"
-                        description="Ca cree une base de donnée en vif la ?"
-                    />
-                </Card>
+                    return <Card
+                        key={post.id}
+                        style={{ width: 400, marginBottom: 15 }}
+                        actions={[
+                            <LikeOutlined key="like" />,
+                            <DislikeOutlined key="dislike" />,
+                            <CommentOutlined key="comment" />,
+                        ]}
+                    >
+                        <Meta
+                            avatar={<Avatar src={avatar} />}
+                            title={username}
+                            description={post.text}
+                        />
+                    </Card>
+                })}
 
-                <Card
-                    style={{ width: 400, marginBottom: 15 }}
-                    actions={[
-                        <LikeOutlined key="like" />,
-                        <DislikeOutlined key="dislike" />,
-                        <CommentOutlined key="comment" />,
-                    ]}
-                >
-                    <Meta
-                        avatar={<Avatar src="https://fr.web.img4.acsta.net/r_654_368/newsv7/19/10/03/15/43/2838505.jpg" />}
-                        title="Ahmed"
-                        description="Donnez moi du taff wsh je m'ennuie la"
-                    />
-                </Card>
             </FeedContent>
         </FeedContainer>
     )

@@ -19,3 +19,9 @@ export async function createPost (params) {
     const result = await response.json()
     return result
 }
+
+export async function getAllPosts (username) {
+  const response = await fetch(`http://localhost:3008/api/posts/feed/${username}`)
+  const jsonData = await response.json()
+  return jsonData
+}
