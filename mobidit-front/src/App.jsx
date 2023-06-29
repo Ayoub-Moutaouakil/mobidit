@@ -1,12 +1,16 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import Feed from './components/Feed'
+import Register from './components/Register'
+import Login from './components/Login'
+import { Routes, Route } from "react-router-dom";
 
 function App() {
   return (
-    <Feed></Feed>
+    <Routes>
+        <Route path="/" element={<Feed />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />}/>
+    </Routes>
   )
 }
 
-export default App
+export default App;

@@ -13,7 +13,7 @@ model posts {
   parent_id    Int?
   user_id      Int?
   date         DateTime @db.Date
-  attachements String   @db.Text
+  attachements String?  @db.Text
   likes        Int      @default(0)
   dislike      Int      @default(0)
   posts        posts?   @relation("postsToposts", fields: [parent_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "posts_ibfk_1")
@@ -26,11 +26,11 @@ model posts {
 
 model users {
   id       Int     @id @default(autoincrement())
-  lname    String? @db.VarChar(255)
-  fname    String? @db.VarChar(255)
-  username String? @unique(map: "username") @db.VarChar(255)
-  mail     String? @db.VarChar(255)
-  password String? @db.VarChar(255)
+  lname    String  @db.VarChar(255)
+  fname    String  @db.VarChar(255)
+  username String  @unique(map: "username") @db.VarChar(255)
+  mail     String  @db.VarChar(255)
+  password String  @db.VarChar(50)
   img_url  String  @db.Text
   posts    posts[]
 }
