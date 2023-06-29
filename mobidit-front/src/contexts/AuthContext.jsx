@@ -16,7 +16,8 @@ export const AuthContextProvider = ({ children }) => {
 
 	function register (credentials) {
 		UserCreate(credentials).then((response) => {
-			console.log(response)
+			setUser(response.data)
+			setIsAuth(response.succes)
 		})
 	}
 

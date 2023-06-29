@@ -72,6 +72,7 @@ const Feed = () => {
                 </Form>
 
                 {posts && posts.map((post) => {
+                    console.log(post)
                     return <Card
                         key={post.id}
                         style={{ width: 400, marginBottom: 15 }}
@@ -82,8 +83,8 @@ const Feed = () => {
                         ]}
                     >
                         <Meta
-                            avatar={<Avatar src={post.img_url} style={{cursor: "pointer"}} onClick={() => navigate("/profil", { state : { img: post.img_url, username: post.username }})} />}
-                            title={post.username}
+                            avatar={<Avatar src={post.users.img_url} style={{cursor: "pointer"}} onClick={() => navigate("/profil", { state : { img: post.users.img_url, username: post.users.username }})} />}
+                            title={post.users.username}
                             description={post.text}
                         />
                     </Card>
