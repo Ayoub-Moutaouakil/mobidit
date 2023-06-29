@@ -26,7 +26,6 @@ const Feed = () => {
     useEffect(() => {
         getAllPosts(user.username).then((response) => {
             setPosts(response.data)
-            console.log(posts)
         })
     }, [])
 
@@ -75,10 +74,6 @@ const Feed = () => {
                 </Form>
 
                 {posts && posts.map((post) => {
-                    var username = getUserName(post.user_id)
-                    var avatar = getUserPhoto(post.user_id)
-                    console.log(username)
-
                     return <Card
                         key={post.id}
                         style={{ width: 400, marginBottom: 15 }}
@@ -89,8 +84,8 @@ const Feed = () => {
                         ]}
                     >
                         <Meta
-                            avatar={<Avatar src={avatar} />}
-                            title={username}
+                            avatar={<Avatar src={post.img_url} />}
+                            title={post.username}
                             description={post.text}
                         />
                     </Card>
