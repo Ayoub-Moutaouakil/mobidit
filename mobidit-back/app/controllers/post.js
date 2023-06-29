@@ -68,8 +68,10 @@ const showUser = async (req, res) => {
       },
       include:{
         users:{
-          username: true,
-          img_url: true
+          select:{
+            username: true,
+            img_url: true
+          }
         }
       }
     });
