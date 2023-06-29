@@ -1,12 +1,23 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { LoginContainer, LoginTitle, LoginWrapper } from "./LoginElements";
 import { Button, Form, Input } from 'antd';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
+import { AuthContext } from "../../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+    const { isAuth, login } = useContext(AuthContext);
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (isAuth === true){
+            navigate("/")
+        }
+    }, [isAuth])
 
     function handleSubmit() {
-        console.log("test")
+        login()
     }
 
     return (
