@@ -41,7 +41,6 @@ const login = async(req, res) =>{
 			code: 200,
 		});
   }
-
 } catch (error) {
   console.log(error);
   let message;
