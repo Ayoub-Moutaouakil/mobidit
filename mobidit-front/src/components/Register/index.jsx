@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { RegisterContainer, RegisterTitle, RegisterWrapper } from "./RegisterElements";
 import { Button, Form, Input, Upload } from 'antd';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
@@ -43,9 +43,9 @@ const Register = () => {
                     autoComplete="off"
                 >
                     <Form.Item
-                        label="Username"
+                        label="Pseudo"
                         name="username"
-                        rules={[{ required: true, message: 'Please input your username!' }]}
+                        rules={[{ required: true, message: 'Veuillez entrer votre pseudo !' }]}
                     >
                         <Input />
                     </Form.Item>
@@ -56,11 +56,11 @@ const Register = () => {
                         rules={[
                             {
                                 type: 'email',
-                                message: 'The input is not valid E-mail!',
+                                message: "Ce n'est pas une email valide !",
                             },
                             {
                                 required: true,
-                                message: 'Please input your E-mail!',
+                                message: 'Veuillez entrez votre email !',
                             },
                         ]}
                     >
@@ -68,9 +68,9 @@ const Register = () => {
                     </Form.Item>
 
                     <Form.Item
-                        label="Password"
+                        label="Mot de passe"
                         name="password"
-                        rules={[{ required: true, message: 'Please input your password!' }]}
+                        rules={[{ required: true, message: 'Veuillez entrer votre mot de passe !' }]}
                     >
                         <Input.Password />
                     </Form.Item>
@@ -94,7 +94,7 @@ const Register = () => {
 
                     <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
                         <Button type="primary" htmlType="submit">
-                            Submit
+                            S'inscrire
                         </Button>
                     </Form.Item>
                 </Form>
