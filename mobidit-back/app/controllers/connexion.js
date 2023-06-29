@@ -21,14 +21,16 @@ const login = async(req, res) =>{
     where: {
       username
     },
-    select: {
-      password: true,
-    },
   });
   const hashedPassword = await crypto.pbkdf2Sync(password, process.env.SALT, 1000, 64, `sha512`).toString(`hex`);
   if(dbPassword.password === hashedPassword){
     return res.json({
 			succes: true,
+      data: {
+        id:dbPassword.id,
+        username: dbPassword.username,
+        img_url: dbPassword.img_url
+      },
 			message:"Connexion réussi",
 			code: 200,
 		});
