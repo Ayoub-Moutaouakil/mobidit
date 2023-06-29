@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
 
 const Register = () => {
-    const { isAuth, login } = useContext(AuthContext);
+    const { isAuth, register } = useContext(AuthContext);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -15,18 +15,8 @@ const Register = () => {
         }
     }, [isAuth])
 
-    const [loading, setLoading] = useState(false);
-    const [imageUrl, setImageUrl] = useState("");
-
-    const uploadButton = (
-        <div>
-          {loading ? <LoadingOutlined /> : <PlusOutlined />}
-          <div style={{ marginTop: 8 }}>Upload</div>
-        </div>
-    );
-
-    function handleSubmit() {
-        console.log("test")
+    function onFinish(values) {
+        register(values)
     }
 
     return (
@@ -39,7 +29,7 @@ const Register = () => {
                     wrapperCol={{ span: 16 }}
                     style={{ maxWidth: 600 }}
                     initialValues={{ remember: true }}
-                    onFinish={handleSubmit}
+                    onFinish={onFinish}
                     autoComplete="off"
                 >
                     <Form.Item
@@ -51,7 +41,7 @@ const Register = () => {
                     </Form.Item>
 
                     <Form.Item
-                        name="email"
+                        name="mail"
                         label="E-mail"
                         rules={[
                             {
@@ -76,19 +66,11 @@ const Register = () => {
                     </Form.Item>
                     
                     <Form.Item
-                        name="upload"
-                        label="Photo de profil"
-                        valuePropName="fileList"
+                        label="URL de l'image"
+                        name="img_url"
+                        rules={[{ required: true, message: "Veuillez entrez une URL d'image !" }]}
                     >
-                        <Upload
-                            name="avatar"
-                            listType="picture-circle"
-                            className="avatar-uploader"
-                            showUploadList={false}
-                            action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                        >
-                            {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
-                        </Upload>
+                        <Input />
                     </Form.Item>
 
 

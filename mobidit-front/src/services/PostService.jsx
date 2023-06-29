@@ -26,8 +26,8 @@ export async function getAllPosts (username) {
   return jsonData
 }
 
-export async function getUserPosts (id) {
-  const response = await fetch(`http://localhost:3008/api/posts/feed/${username}`)
+export async function getUserPosts (username) {
+  const response = await fetch(`http://localhost:3008/api/users/${username}`)
   const jsonData = await response.json()
   return jsonData
 }

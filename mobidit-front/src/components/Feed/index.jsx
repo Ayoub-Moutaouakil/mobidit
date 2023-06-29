@@ -5,7 +5,6 @@ import { Avatar, Card, Input, Button, Form } from 'antd';
 import { AuthContext } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { createPost, getAllPosts } from "../../services/PostService";
-import { getUserName, getUserPhoto } from "../../services/UserService";
 
 const { Meta } = Card;
 const { TextArea } = Input;
@@ -54,7 +53,7 @@ const Feed = () => {
                         style={{ width: 400, marginBottom: 15, }}
                     >
                         <Meta
-                            avatar={<Avatar src={user.img_url} />}
+                            avatar={<Avatar src={user.img_url} style={{cursor: "pointer"}} onClick={() => navigate("/profil", { state : { img: user.img_url, username: user.username }})}/>}
                             title={user.username}
                         />
                         <Form.Item
@@ -83,7 +82,7 @@ const Feed = () => {
                         ]}
                     >
                         <Meta
-                            avatar={<Avatar src={post.img_url} />}
+                            avatar={<Avatar src={post.img_url} style={{cursor: "pointer"}} onClick={() => navigate("/profil", { state : { img: post.img_url, username: post.username }})} />}
                             title={post.username}
                             description={post.text}
                         />

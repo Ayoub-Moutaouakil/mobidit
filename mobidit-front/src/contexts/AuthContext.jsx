@@ -1,5 +1,5 @@
 import { createContext, useState } from 'react';
-import { UserLogin } from '../services/UserService';
+import { UserCreate, UserLogin } from '../services/UserService';
 
 export const AuthContext = createContext();
 
@@ -9,14 +9,19 @@ export const AuthContextProvider = ({ children }) => {
 
 	function login (credentials) {
         UserLogin(credentials).then((response) => {
-			console.log(response)
             setUser(response.data)
             setIsAuth(response.succes)
         })
     }
 
+	function register (credentials) {
+		UserCreate(credentials).then((response) => {
+			console.log(response)
+		})
+	}
+
 	return (
-		<AuthContext.Provider value={{ user, isAuth, login }}>
+		<AuthContext.Provider value={{ user, isAuth, login, register }}>
 			{children}
 		</AuthContext.Provider>
 	);
