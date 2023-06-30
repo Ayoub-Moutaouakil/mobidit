@@ -24,9 +24,10 @@ const show = async (req, res) => {
 				username: username,
 			},
 			include:{
-				posts: true,
-				orderBy: {
-					date:'desc'
+				posts: {
+					orderBy: {
+						date:'desc'
+					},
 				},
 			}
 		});
