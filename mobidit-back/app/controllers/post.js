@@ -103,10 +103,10 @@ const create = async (req, res) =>{
     const createPost = await prisma.posts.create({
       data: {
         text,
-        user_id: parseInt(user_id, 10),
-        likes: parseInt(likes, 10),
-        dislike: parseInt(dislike, 10),
-        parent_id: parseInt(parent_id, 10),
+        user_id: parseInt(user_id, 10) || undefined,
+        likes: parseInt(likes, 10) || undefined,
+        dislike: parseInt(dislike, 10) || undefined,
+        parent_id: parseInt(parent_id, 10) || undefined,
         date: new Date()
       },
     });
