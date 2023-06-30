@@ -24,7 +24,10 @@ const show = async (req, res) => {
 				username: username,
 			},
 			include:{
-				posts: true
+				posts: true,
+				orderBy: {
+					date:'desc'
+				},
 			}
 		});
 		return res.json({
@@ -125,4 +128,4 @@ module.exports = {
 	create, //create user
 	update, //update user
 	supprimer //delete user
-}
+};

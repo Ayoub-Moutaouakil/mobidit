@@ -23,10 +23,12 @@ const show = async (req, res) =>{
         id:parseInt(id, 10)
       }
     });
-    console.log(post.id)
     const subPost = await prisma.posts.findMany({
       where:{
         parent_id:post.id
+      },
+      orderBy: {
+        date:'desc'
       },
       include:{
         users:{
@@ -58,19 +60,20 @@ const showUser = async (req, res) => {
   const {
 		params: { username },
 	} = req;
-  console.log(username)
   try{
     const user = await prisma.users.findUnique({
 			where: {
 				username,
 			},
 		});
-    console.log(user.id);
     const posts = await prisma.posts.findMany({
       where: {
         NOT:{
           user_id:user.id,
         }
+      },
+      orderBy: {
+        date:'desc'
       },
       include:{
         users:{
