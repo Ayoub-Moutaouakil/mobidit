@@ -24,7 +24,7 @@ const Profil = () => {
 
     useEffect(() => {
         getUserPosts(username).then((response) => {
-            setPosts(response.data.posts)
+            setPosts(response.data.posts.slice().reverse())
         })
     }, [])
     

@@ -1,10 +1,11 @@
-import React, { useContext, useEffect } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { PostContainer } from "./PostElements";
 import { LikeOutlined, DislikeOutlined, CommentOutlined, PlusOutlined } from '@ant-design/icons';
 import { Avatar, Card, Input, Button, Form } from 'antd';
 import { useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
-import { createPost } from "../../services/PostService";
+import { createPost, getPostById } from "../../services/PostService";
+import { comment } from "postcss";
 
 const { Meta } = Card;
 const { TextArea } = Input;
@@ -16,11 +17,19 @@ const Post = () => {
     const {state} = useLocation();
     const { img, username, text, id } = state
 
+    const [comments, setComments] = useState([])
+
     useEffect(() => {
         if (isAuth === false) {
             navigate("/login");
         }
     }, [isAuth])
+
+    useEffect(() => {
+        getPostById(id).then((response) => {
+            setComments(response.subPost.slice().reverse())
+        })
+    }, [])
 
     function onFinish (value) {
         var params = {
@@ -67,15 +76,19 @@ const Post = () => {
                         <Button type="primary" shape="circle" icon={<PlusOutlined />} size={'large'} style={{ justifySelf: "center" }} htmlType="submit" />
                     </Card>
                 </Form>
-                <Card
+
+                {comments && comments.map((comment) => {
+                    return <Card
+                    key={comment.id}
                     style={{ width: "100%", height: "fit-content", marginTop: 15 }}
                 >
                     <Meta
-                        avatar={<Avatar src={"https://fr.web.img4.acsta.net/r_654_368/newsv7/19/10/03/15/43/2838505.jpg"} style={{ cursor: "pointer" }} />}
-                        title={"Khais"}
-                        description={"Ceci est un commentaire"}
+                        avatar={<Avatar src={comment.users.img_url} style={{ cursor: "pointer" }} />}
+                        title={comment.users.username}
+                        description={comment.text}
                     />
                 </Card>
+                })}
             </Card>
         </PostContainer>
     )

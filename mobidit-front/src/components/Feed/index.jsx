@@ -23,7 +23,7 @@ const Feed = () => {
 
     useEffect(() => {
         getAllPosts(user.username).then((response) => {
-            setPosts(response.data)
+            setPosts(response.data.slice().reverse())
         })
     }, [])
 

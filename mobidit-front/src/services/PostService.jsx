@@ -31,3 +31,9 @@ export async function getUserPosts (username) {
   const jsonData = await response.json()
   return jsonData
 }
+
+export async function getPostById (id) {
+  const response = await fetch(`http://localhost:3008/api/posts/${id}`)
+  const jsonData = await response.json()
+  return jsonData
+}
