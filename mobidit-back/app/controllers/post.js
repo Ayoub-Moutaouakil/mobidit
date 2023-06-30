@@ -27,6 +27,14 @@ const show = async (req, res) =>{
     const subPost = await prisma.posts.findMany({
       where:{
         parent_id:post.id
+      },
+      include:{
+        users:{
+          select:{
+            username: true,
+            img_url: true
+          }
+        }
       }
     });
       return res.json({
@@ -57,28 +65,26 @@ const showUser = async (req, res) => {
 				username,
 			},
 		});
-    console.log(user.user_id);
+    console.log(user.id);
     const posts = await prisma.posts.findMany({
       where: {
         NOT:{
-          user_id:user.user_id,
+          user_id:user.id,
         }
-      }
+      },
+      include:{
+        users:{
+          select:{
+            username: true,
+            img_url: true
+          }
+        }}
     });
-    if(posts.length){
       return res.json({
         succes: true,
         data: posts,
         code: 200,
       });
-    } else{
-      return res.json({
-        succes: true,
-        message: 'Aucun posts a afficher.',
-        code: 200,
-      });
-    }
-    
   } catch (error){
     console.log(error);
 		return res.json({ succes: false, data: { error }, code: 400 });
