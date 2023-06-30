@@ -11,6 +11,7 @@ const verify = async( req, res ) =>{
   } } = req;
 };
 
+// Fonction de connexion
 const login = async(req, res) =>{
   const { body:{
     username,
@@ -22,7 +23,8 @@ const login = async(req, res) =>{
       username
     },
   });
-  const hashedPassword = await crypto.pbkdf2Sync(password, process.env.SALT, 1000, 64, `sha512`).toString(`hex`);
+  // Effectue le hachage du mot de passe fourni par l'utilisateur
+  const hashedPassword = await crypto.pbkdf2Sync(password, process.env.SALT, 1000, 64, `sha512`).toString(`hex`); 
   if(dbPassword.password === hashedPassword){
     return res.json({
 			succes: true,
