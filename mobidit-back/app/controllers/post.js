@@ -86,11 +86,22 @@ const showUser = async (req, res) => {
 };
 
 const create = async (req, res) =>{
-  const { body } = req;
+  const { body:{
+    text,
+    parent_id,
+    user_id,
+    likes,
+    dislike
+  } } = req;
   try{
     const createPost = await prisma.posts.create({
       data: {
-        ...body,
+        text,
+        user_id: parseInt(user_id, 10),
+        likes: parseInt(likes, 10),
+        dislike: parseInt(dislike, 10),
+        parent_id: parseInt(parent_id, 10),
+        date: new Date()
       },
     });
     return res.json({
